@@ -1,11 +1,15 @@
-import app from './App'
+import express = require('express')
+import routers from './routers'
 
+const app = express()
 const port = process.env.PORT || 3000
 
-app.listen(port, (err) => {
-  if (err) {
-    return console.log(err)
-  }
+routers.forEach(router => {
+  app.use(router)
+})
 
-  return console.log(`server is listening on ${port}`)
+const server = app.listen(port, (err) => {
+  if (err) throw(err)
+
+  console.log(`server is listening on ${server.address().port}`)
 })
